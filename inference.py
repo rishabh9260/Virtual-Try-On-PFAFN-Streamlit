@@ -50,7 +50,7 @@ def get_result_images():
         flow_out = warp_model(real_image.cuda(), clothes.cuda())
         warped_cloth, last_flow, = flow_out
         warped_edge = F.grid_sample(edge.cuda(), last_flow.permute(0, 2, 3, 1),
-                          mode='bilinear', padding_mode='zeros')
+                          mode='bilinear', padding_mode='zeros', align_corners=True)
 
 
         gen_inputs = torch.cat([real_image.cuda(), warped_cloth, warped_edge], 1)
